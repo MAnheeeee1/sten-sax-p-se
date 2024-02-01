@@ -1,56 +1,62 @@
-function getComupterchoice(){
-    const game = ["rock" , "siccors" , "papper"];
+let playerPoint = 0;
+let computerPoint = 0;
+let playerSelection = " ";
+let computerSelection = " ";
+let result = " ";
+let winnerDisplay = document.querySelector(".winner");
+
+// Get computer's choice
+function getComputerChoice() {
+    const game = ["rock", "scissors", "paper"];
     let random = Math.floor(Math.random() * 3);
     return game[random];
 }
 
-let playerPoint = 0;
-let computerPoint = 0;
-
-function playRound (playerSelection, computerSelection, playerPoint, computerPoint){
-    if (playerSelection == computerSelection){
-        return "Its a draw"
-    }
-    else if (playerSelection == "rock" && computerSelection == "papper"){
+// Plays the game
+function playRound(playerSelection, computerSelection, playerPoint, computerPoint, winnerDisplay, result) {
+    if (playerSelection === computerSelection) {
+        result = "It's a draw";
+        winnerDisplay.innerHTML = result;
+        
+    } else if (
+        (playerSelection === "rock" && computerSelection === "paper") ||
+        (playerSelection === "scissors" && computerSelection === "rock") ||
+        (playerSelection === "paper" && computerSelection === "scissors")
+    ) {
         computerPoint++;
-        return "You Lose! Rock loses to Papper"
-    }
-    else if (playerSelection == "rock" && computerSelection == "siccors"){
+        result = `You Lose! ${playerSelection} loses to ${computerSelection}`;
+        winnerDisplay.innerHTML = result;
+    } else {
         playerPoint++;
-        return "You Win! Rock wins over Siccors "
+        result = `You Win! ${playerSelection} wins over ${computerSelection}`;
+        winnerDisplay.innerHTML = result;
+        
     }
-    else if (playerSelection == "siccors" && computerSelection == "rock"){
-        computerPoint++;
-        return "You Lose! Siccors loses to Rock"
-    }
-    else if (playerSelection == "siccors" && computerSelection == "papper"){
-        playerPoint++;
-        return "You Win! Siccors wins over Papper "
-    }
-    else if (playerSelection == "papper" && computerSelection == "siccors"){
-        computerPoint++;
-        return "You Lose! Papper loses to Siccors"
-    }
-    else if (playerSelection == "papper" && computerSelection == "rock"){
-        playerPoint++;
-        return "You Win! Papper wins over Rock "
-    }
-    
 }
 
-for(let i = 0; i < 5;i++){
-    var playerSelection = prompt("What do you chose (Rock, Papper, Siccors)").toLowerCase()
-    let computerSelection = getComupterchoice();
-    console.log(playRound(playerSelection, computerSelection))
-}
+let rockChoice = document.querySelector(".rock");
+rockChoice.addEventListener("click", () => {
+    playerSelection = "rock";
+    if (playerSelection != " ") {
+        computerSelection = getComputerChoice();
+        playRound(playerSelection, computerSelection, playerPoint, computerPoint, winnerDisplay);
+    }
+});
 
+let papperChoice = document.querySelector(".papper");
+papperChoice.addEventListener("click", () =>{
+    playerSelection = "papper";
+    if (playerSelection != " "){
+        computerSelection = getComputerChoice();
+        playRound(playerSelection, computerSelection, playerPoint, computerPoint, winnerDisplay);
+    }
+})
 
-if( computerPoint > playerPoint){
-    console.log("The computure has won with:" + computerPoint - playerPoint + " Point")
-}
-else if (computerPoint < playerPoint){
-    console.log("You has won with:" + playerPoint - computerPoint + " Point")
-}
-else{
-    console.log("Its a draw")
-}
+let siccorsChoice = document.querySelector(".siccors");
+siccorsChoice.addEventListener("click", () =>{
+    playerSelection = "siccors";
+    if (playerSelection != " "){
+        computerSelection = getComputerChoice();
+        playRound(playerSelection, computerSelection, playerPoint, computerPoint, winnerDisplay);
+    }
+})
